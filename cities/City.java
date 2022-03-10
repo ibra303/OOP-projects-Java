@@ -1,33 +1,45 @@
 package cities;
 
-public class City {
-	private String name;
-	private Road[] roads;
-	private int numRoads=0;
-	public City(String name) {
-		this.name=name;
-		roads=new Road[10];
-		numRoads=0;
-	}
-	public void connect(Road r) {//Adds the road to the city's road list
-		if(numRoads<10)
-		roads[numRoads++]=r;
-	}
-	
-	public City nearestCity() // return the nearest city
-	{
-		Road min=(roads)[0];
-		if(this.roads[0]==null)
-			return null;
-		for(int i=0;i<numRoads;i++)
-		{
-			if((roads)[i].getLength()<min.getLength())
-				min=(roads)[i] ;
-		}
-		return min.getCity2();
-	}
-	public String toString()
-	{//Returns the city name.
-		return this.name ;
-	}
+public class City implements Comparable<City>
+{
+private String name;
+private Country country;
+private int population;
+public City(String name, Country country, int population) {
+	this.name = name;
+	this.country = country;
+	this.population = population;
+}
+//
+public String getName() {
+	return name;
+}
+//
+public Country getCountry() {
+return country;
+}
+public int getPopulation() {
+	return population;
+}
+public String toString() {
+	return name+" (of "+country+")";
+}
+
+@Override
+public int compareTo(City other) 
+{
+	if(country.toString().compareTo(other.country.toString()) == 0)
+		return name.compareTo(other.getName());
+	return country.toString().compareTo(other.country.toString());
+}
+
+@Override
+
+public boolean equals(Object obj)
+{
+	City c = (City)obj;
+	if(c.country.equals(this.country)&&c.getName()==this.getName())
+		return true;
+	return false;
+}
 }
